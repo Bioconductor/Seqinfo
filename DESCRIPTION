@@ -1,0 +1,32 @@
+Package: Seqinfo
+Title: A simple S4 class for storing basic information about a collection of genomic sequences
+Description: The Seqinfo class stores the names, lengths, circularity flags,
+	and genomes for a particular collection of sequences. These sequences
+	are typically the chromosomes and/or scaffolds of a specific genome
+	assembly of a given organism. Seqinfo objects are rarely used as
+	standalone objects. Instead, they are used as part of higher-level
+	objects to represent their seqinfo() component. Examples of such
+	higher-level objects are GRanges, RangedSummarizedExperiment, VCF,
+	GAlignments, etc... defined in other Bioconductor infrastructure
+	packages.
+biocViews: Infrastructure, DataRepresentation, Genetics, Annotation, GenomeAnnotation
+URL: https://bioconductor.org/packages/Seqinfo
+BugReports: https://github.com/Bioconductor/Seqinfo/issues
+Version: 0.1.0
+License: Artistic-2.0
+Encoding: UTF-8
+Authors@R: person("Hervé", "Pagès", role=c("aut", "cre"),
+		  email="hpages.on.github@gmail.com",
+		  comment=c(ORCID="0009-0002-8272-4522"))
+Depends: R (>= 4.0.0), methods, BiocGenerics
+Imports: stats, S4Vectors, IRanges
+Suggests: GenomeInfoDb, GenomicRanges, TxDb.Dmelanogaster.UCSC.dm3.ensGene,
+	BSgenome.Celegans.UCSC.ce2, BSgenome.Scerevisiae.UCSC.sacCer2,
+	RUnit, knitr, BiocStyle
+VignetteBuilder: knitr
+Collate: utils.R
+	rankSeqlevels.R
+	seqinfo.R
+	Seqinfo-class.R
+	GenomeDescription-class.R
+	zzz.R
