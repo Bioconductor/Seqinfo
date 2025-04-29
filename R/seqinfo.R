@@ -139,7 +139,7 @@ makeNewSeqnames <- function(x, new2old=NULL, new_seqlevels)
          "\n\n",
          "    seqlevels(x) <- seqlevels(new_seqinfo)\n\n  ",
          wmsg("before calling the 'seqinfo()' setter. ",
-	      "Note that you might need to specify a pruning mode ",
+              "Note that you might need to specify a pruning mode ",
               "(via the 'pruning.mode' argument) if this operation ",
               "will drop seqlevels that are in use in 'x'."),
          "\n  ",

@@ -86,7 +86,8 @@ setMethod("genome", "Seqinfo",
     if (!is.integer(x_seqlengths)
      || length(x_seqlengths) != length(x)
      || !identical(names(x_seqlengths), seqnames(x)))
-        return("'seqlengths(x)' must be an integer vector of the length of 'x' and with names 'seqnames(x)'")
+        return(paste0("'seqlengths(x)' must be an integer vector of ",
+                      "the length of 'x' and with names 'seqnames(x)'"))
     if (any(x_seqlengths < 0L, na.rm=TRUE))
         return("'seqlengths(x)' contains negative values")
     NULL
@@ -100,7 +101,8 @@ setMethod("genome", "Seqinfo",
     if (!is.logical(x_is_circular)
      || length(x_is_circular) != length(x)
      || !identical(names(x_is_circular), seqnames(x)))
-        return("'isCircular(x)' must be a logical vector of the length of 'x' and with names 'seqnames(x)'")
+        return(paste0("'isCircular(x)' must be a logical vector of ",
+                      "the length of 'x' and with names 'seqnames(x)'"))
     NULL
 }
 
@@ -112,7 +114,8 @@ setMethod("genome", "Seqinfo",
     if (!is.character(x_genome)
      || length(x_genome) != length(x)
      || !identical(names(x_genome), seqnames(x)))
-        return("'genome(x)' must be a character vector of the length of 'x' and with names 'seqnames(x)'")
+        return(paste0("'genome(x)' must be a character vector of ",
+                      "the length of 'x' and with names 'seqnames(x)'"))
     NULL
 }
 
@@ -532,7 +535,7 @@ summary.Seqinfo <- function(object, ...)
             ans <- c(ans, " from ", ugenomes, " genome")
     } else {
         if (genome_count > 3L)
-            ugenomes <- c(ugenomes[1:2], "...")
+            ugenomes <- c(head(ugenomes, n=2L), "...")
         genomes_in1string <- paste0(ugenomes, collapse=", ")
         ans <- c(ans, " from ", genome_count, " genomes ",
                       "(", genomes_in1string, ")")
@@ -671,7 +674,7 @@ setMethod("show", "Seqinfo",
 {
     args <- unname(list(...))
     ## Remove NULL elements...
-    arg_is_null <- sapply(args, is.null)
+    arg_is_null <- vapply(args, is.null, logical(1))
     if (any(arg_is_null))
         args[arg_is_null] <- NULL  # ... by setting them to NULL!
     if (length(args) == 0L)
@@ -680,7 +683,7 @@ setMethod("show", "Seqinfo",
     if (length(args) == 1L)
         return(x)
     args <- args[-1L]
-    if (!all(sapply(args, is, class(x))))
+    if (!all(vapply(args, function(arg) is(arg, class(x)), logical(1))))
         stop("all arguments in must be ", class(x), " objects (or NULLs)")
     for (y in args)
         x <- .merge_two_Seqinfo_objects(x, y)

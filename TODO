@@ -1,0 +1,10 @@
+- As soon as the package is accepted in Bioconductor and added to the daily
+  builds:
+  1. The following packages must be modified to depend on Seqinfo instead
+     of GenomeInfoDb: GenomicRanges, SummarizedExperiment, BSgenome.
+  2. GenomeInfoDb must be modified to depend on Seqinfo. The stuff in
+     GenomeInfoDb that temporarily repeats and masks the stuff that is
+     now in Seqinfo must be removed.
+  3. Software packages that import stuff that has moved from GenomeInfoDb
+     to Seqinfo will need to be modified to import this stuff from Seqinfo
+     instead.

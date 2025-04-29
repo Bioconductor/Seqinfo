@@ -53,9 +53,9 @@ orderSeqlevels(seqnames, X.is.sexchrom=NA)
 }
 
 \examples{
-library(BSgenome.Scerevisiae.UCSC.sacCer2)
-rankSeqlevels(seqnames(Scerevisiae))
-rankSeqlevels(seqnames(Scerevisiae)[c(1:5,5:1)])
+si <- Seqinfo(genome="sacCer2")
+rankSeqlevels(seqnames(si))
+rankSeqlevels(seqnames(si)[c(1:5,5:1)])
 
 newchr <- paste0("chr",c(1:3,6:15,4:5,16:22))
 newchr

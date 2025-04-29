@@ -178,7 +178,9 @@ genome(x) <- value
   }
 }
 
-\section{It all revolves around Seqinfo objects}{
+\details{
+  "It all revolves around Seqinfo objects"
+
   The \link{Seqinfo} class plays a central role for the functions described
   in this man page because:
 
@@ -221,6 +223,25 @@ genome(x) <- value
   }
 }
 
+\value{
+  The \code{seqinfo()} getter returns a \link{Seqinfo} object.
+
+  The \code{seqnames()}, \code{seqlevels()}, \code{seqlevelsInUse()},
+  and \code{seqlevels0()} getters return a character vector with no
+  \code{NA}s.
+
+  \code{sortSeqlevels(x)} returns a character vector with no \code{NA}s.
+
+  The \code{seqlengths()} getter returns a named integer vector, possibly
+  with \code{NA}s.
+
+  The \code{isCircular()} getter returns a named logical vector, possibly
+  with \code{NA}s.
+
+  The \code{genome()} getter returns a named character vector, possibly
+  with \code{NA}s.
+}
+
 \note{
   The full list of methods defined for a given generic function can be seen
   with e.g. \code{showMethods("seqinfo")} or \code{showMethods("seqnames")}
@@ -244,10 +265,10 @@ genome(x) <- value
 
 \seealso{
   \itemize{
-    \item The \link[GenomeInfoDb]{seqlevelsStyle} generic getter and setter
-          in the \pkg{GenomeInfoDb} package for conveniently renaming the
-          seqlevels of an object according to a particular naming convention
-          (e.g. NCBI or UCSC).
+    \item The \code{\link[GenomeInfoDb]{seqlevelsStyle}} generic getter and
+          setter in the \pkg{GenomeInfoDb} package for conveniently renaming
+          the seqlevels of an object according to a particular naming
+          convention (e.g. NCBI or UCSC).
 
     \item \link{Seqinfo} objects.
 

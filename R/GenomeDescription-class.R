@@ -44,7 +44,9 @@ setGeneric("provider", function(x) standardGeneric("provider"))
 setMethod("provider", "GenomeDescription", function(x) x@provider)
 
 setGeneric("providerVersion", function(x) standardGeneric("providerVersion"))
-setMethod("providerVersion", "GenomeDescription", function(x) x@provider_version)
+setMethod("providerVersion", "GenomeDescription",
+    function(x) x@provider_version
+)
 
 setGeneric("releaseDate", function(x) standardGeneric("releaseDate"))
 setMethod("releaseDate", "GenomeDescription", function(x) x@release_date)
