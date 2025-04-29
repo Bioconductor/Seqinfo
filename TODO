@@ -2,9 +2,16 @@
   builds:
   1. The following packages must be modified to depend on Seqinfo instead
      of GenomeInfoDb: GenomicRanges, SummarizedExperiment, BSgenome.
-  2. GenomeInfoDb must be modified to depend on Seqinfo. The stuff in
-     GenomeInfoDb that temporarily repeats and masks the stuff that is
-     now in Seqinfo must be removed.
+  2. GenomeInfoDb must be modified to depend on Seqinfo. Also:
+     (a) The stuff in GenomeInfoDb that temporarily repeats and masks the
+         stuff that is now in Seqinfo must be removed.
+     (b) The corresponding man pages must also be removed.
+     (c) Some links in the man pages that refer to stuff that is now in
+         Seqinfo must be adjusted e.g. \link[Seqinfo]{...}.
+     (d) The vignette in GenomeInfoDb must be cleaned by removing the parts
+         that document stuff that is now documented in the Seqinfo vignette.
+     (e) Unit tests for stuff that is now in Seqinfo should be removed (these
+         tests are now in the Seqinfo package).
   3. Software packages that import stuff that has moved from GenomeInfoDb
      to Seqinfo will need to be modified to import this stuff from Seqinfo
      instead.

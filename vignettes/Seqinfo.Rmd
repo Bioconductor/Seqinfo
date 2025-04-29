@@ -29,14 +29,18 @@ library(BSgenome.Hsapiens.UCSC.hg38)
 `r Biocpkg("Seqinfo")` is an R/Bioconductor infrastructure package that
 implements a simple S4 class, the Seqinfo class, for storing the following
 information about a collection of genomic sequences:
+
 - the sequence names a.k.a. the _seqnames_;
+
 - the sequence lengths a.k.a. the _seqlengths_;
+
 - the sequence circularity flags, that is, whether the sequences are circular
   or not;
+
 - the sequence genomes, that is, the genome assembly that each sequence is
   coming from, if any.
 
-The sequences described in a Seqinfo are typically, but not necessarily,
+The sequences described in a Seqinfo object are typically, but not necessarily,
 the chromosomes and/or scaffolds of a specific genome assembly of a given
 organism.
 
