@@ -3,7 +3,7 @@ title: "The _Seqinfo_ package"
 author:
 - name: Hervé Pagès
   affiliation: Fred Hutch Cancer Center, Seattle, WA
-date: "Compiled `r BiocStyle::doc_date()`; Modified 28 April 2025"
+date: "Compiled `r BiocStyle::doc_date()`; Modified 29 April 2025"
 package: Seqinfo
 vignette: |
   %\VignetteIndexEntry{The Seqinfo package}
@@ -185,10 +185,13 @@ an error:
 ## This contradicts what 'x' says about circularity of chr3 and chrM:
 isCircular(si2)[c("chr3", "chrM")] <- c(TRUE, FALSE)
 si2
-
-if (interactive()) {
-    merge(si1, si2)  # raises an error
-}
+```
+```{r, eval=FALSE}
+merge(si1, si2)  # ERROR!
+## Error in mergeNamedAtomicVectors(isCircular(x), isCircular(y), what = c("sequence",  :
+##   sequences chr3, chrM have incompatible circularity flags:
+##   - in 'x': FALSE, TRUE
+##   - in 'y': TRUE, FALSE
 ```
 See `?Seqinfo` for more information.
 
