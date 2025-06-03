@@ -129,7 +129,7 @@ A Seqinfo object can be subsetted by _seqnames_:
 si1[c("chrY", "chr3", "chr1")]
 ```
 
-## Rename, drop, add and/or reorder the sequences:
+## Rename, drop, add and/or reorder the sequences
 
 Rename:
 ```{r rename_Seqinfo}
