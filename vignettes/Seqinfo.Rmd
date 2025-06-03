@@ -3,7 +3,7 @@ title: "The _Seqinfo_ package"
 author:
 - name: Hervé Pagès
   affiliation: Fred Hutch Cancer Center, Seattle, WA
-date: "Compiled `r BiocStyle::doc_date()`; Modified 29 April 2025"
+date: "Compiled `r BiocStyle::doc_date()`; Modified 3 June 2025"
 package: Seqinfo
 vignette: |
   %\VignetteIndexEntry{The Seqinfo package}
@@ -91,9 +91,9 @@ specify only the `genome` argument and set it to the name of an NCBI
 assembly (e.g. `Seqinfo(genome="GRCh38.p14")`) or UCSC genome (e.g.
 `Seqinfo(genome="hg38")`), in which case the sequence information is
 fetched from NCBI or UCSC. This requires the `r Biocpkg("GenomeInfoDb")`
-package:
+package (the package only needs to be installed):
 ```{r Seqinfo_contructor_2}
-library(GenomeInfoDb)
+library(GenomeInfoDb)  # just making sure that the package is installed
 
 Seqinfo(genome="GRCh38.p14")
 
