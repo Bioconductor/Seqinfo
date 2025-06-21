@@ -22,6 +22,35 @@ setClass("Seqinfo",
 
 
 ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+### updateObject()
+###
+### The Seqinfo class definition was moved from GenomeInfoDb to the Seqinfo
+### package in BioC 3.22.
+
+setMethod("updateObject", "Seqinfo",
+    function(object, ..., verbose=FALSE)
+    {
+        object_class <- class(object)
+        class_package_attr <- attr(object_class, "package")
+        if (class_package_attr != "Seqinfo") {
+            if (verbose)
+                message("[updateObject] class package attribute ",
+                        "on ", object_class, " object ",
+                        "is \"", class_package_attr, "\".\n",
+                        "[updateObject] Setting it to \"Seqinfo\" ... ",
+                        appendLF=FALSE)
+            class(object) <- class(Seqinfo())
+            if (verbose)
+                message("OK")
+        }
+
+        #object <- callNextMethod()
+        object
+    }
+)
+
+
+### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ### Getters
 ###
 
@@ -306,25 +335,6 @@ Seqinfo <- function(seqnames=NULL, seqlengths=NA, isCircular=NA, genome=NA)
                    is_circular=is_circular,
                    genome=genome)
 }
-
-
-### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-### Updating old Seqinfo objects
-###
-
-setMethod("updateObject", "Seqinfo",
-    function(object, ..., verbose=FALSE)
-    {
-        if (verbose)
-            message("updateObject(object = 'Seqinfo')")
-        if (!is(try(object@genome, silent=TRUE), "try-error"))
-            return(genome)
-        as(Seqinfo(seqnames=object@seqnames,
-                   seqlengths=object@seqlengths,
-                   isCircular=object@is_circular),
-           class(object))
-    }
-)
 
 
 ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
