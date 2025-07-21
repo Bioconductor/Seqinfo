@@ -8,13 +8,8 @@
 \alias{seqlevels,ANY-method}
 \alias{seqlevels<-}
 \alias{seqlevels<-,ANY-method}
-\alias{sortSeqlevels}
-\alias{sortSeqlevels,character-method}
-\alias{sortSeqlevels,ANY-method}
-\alias{seqlevelsInUse}
-\alias{seqlevelsInUse,Vector-method}
-\alias{seqlevelsInUse,CompressedList-method}
 \alias{seqlevels0}
+\alias{restoreSeqlevels}
 \alias{seqlengths}
 \alias{seqlengths,ANY-method}
 \alias{seqlengths<-}
@@ -48,9 +43,8 @@ seqnames(x) <- value
 seqlevels(x)
 seqlevels(x,
           pruning.mode=c("error", "coarse", "fine", "tidy")) <- value
-sortSeqlevels(x, X.is.sexchrom=NA)
-seqlevelsInUse(x)
 seqlevels0(x)
+restoreSeqlevels(x)
 
 seqlengths(x)
 seqlengths(x) <- value
@@ -171,11 +165,6 @@ genome(x) <- value
     A vector containing the sequence information to store for the other
     setters.
   }
-  \item{X.is.sexchrom}{
-    A logical indicating whether X refers to the sexual chromosome
-    or to chromosome with Roman Numeral X. If \code{NA}, \code{sortSeqlevels}
-    does its best to "guess".
-  }
 }
 
 \details{
@@ -185,8 +174,8 @@ genome(x) <- value
   in this man page because:
 
   \enumerate{
-    \item All these functions (except \code{seqinfo}, \code{seqlevelsInUse},
-          and \code{seqlevels0}) work on a \link{Seqinfo} object.
+    \item All these functions (except \code{seqinfo}, \code{seqlevels0},
+          and \code{restoreSeqlevels}) work on a \link{Seqinfo} object.
 
     \item For classes that implement it, the \code{seqinfo} getter should
           return a \link{Seqinfo} object.
@@ -226,11 +215,11 @@ genome(x) <- value
 \value{
   The \code{seqinfo()} getter returns a \link{Seqinfo} object.
 
-  The \code{seqnames()}, \code{seqlevels()}, \code{seqlevelsInUse()},
-  and \code{seqlevels0()} getters return a character vector with no
-  \code{NA}s.
+  The \code{seqnames()}, \code{seqlevels()}, and \code{seqlevels0()} getters
+  return a character vector with no \code{NA}s.
 
-  \code{sortSeqlevels(x)} returns a character vector with no \code{NA}s.
+  \code{restoreSeqlevels()} returns input object \code{x} with its original
+  seqlevels restored i.e. reset to \code{seqlevels0(x)}.
 
   The \code{seqlengths()} getter returns a named integer vector, possibly
   with \code{NA}s.
@@ -288,12 +277,15 @@ genome(x) <- value
 
     \item \link[BSgenome]{BSgenome} objects in the \pkg{BSgenome} package.
 
+    \item \code{\link{sortSeqlevels}} for sorting the sequence levels
+          of an object in "natural" order.
+
+    \item \code{\link{seqlevelsInUse}} for getting the sequence levels that
+          are used by an object.
+
     \item \link[GenomeInfoDb]{seqlevels-wrappers} in the \pkg{GenomeInfoDb}
           package for convenience wrappers to the \code{seqlevels} getter
           and setter.
-
-    \item \code{\link{rankSeqlevels}}, on which \code{sortSeqlevels} is
-          based.
   }
 }
 
@@ -318,14 +310,10 @@ gr <- GRanges(rep(c("chr2", "chr3", "chrM"), 2), IRanges(1:6, 10))
 ## Add new seqlevels:
 seqlevels(gr) <- c("chr1", seqlevels(gr), "chr4")
 seqlevels(gr)
-seqlevelsInUse(gr)
 
 ## Reorder existing seqlevels:
 seqlevels(gr) <- rev(seqlevels(gr))
 seqlevels(gr)
-
-## Drop all unused seqlevels:
-seqlevels(gr) <- seqlevelsInUse(gr)
 
 ## Drop some seqlevels in use:
 seqlevels(gr, pruning.mode="coarse") <- setdiff(seqlevels(gr), "chr3")
@@ -395,31 +383,15 @@ seqlevels(txdb)[seqlevels(txdb) == "CHM"] <- "M"
 seqlevels(txdb)
 
 ## Restore original seqlevels:
-seqlevels(txdb) <- seqlevels0(txdb)
+txdb <- restoreSeqlevels(txdb)  # same as
+                                # seqlevels(txdb) <- seqlevels0(txdb)
 seqlevels(txdb)
 
-## ---------------------------------------------------------------------
-## D. SORT SEQLEVELS IN "NATURAL" ORDER
-## ---------------------------------------------------------------------
-
-sortSeqlevels(c("11", "Y", "1", "10", "9", "M", "2"))
-
-seqlevels <- c("chrXI", "chrY", "chrI", "chrX", "chrIX", "chrM", "chrII")
-sortSeqlevels(seqlevels)
-sortSeqlevels(seqlevels, X.is.sexchrom=TRUE)
-sortSeqlevels(seqlevels, X.is.sexchrom=FALSE)
-
-seqlevels <- c("chr2RHet", "chr4", "chrUextra", "chrYHet",
-               "chrM", "chrXHet", "chr2LHet", "chrU",
-               "chr3L", "chr3R", "chr2R", "chrX")
-sortSeqlevels(seqlevels)
-
-gr <- GRanges()
-seqlevels(gr) <- seqlevels
-sortSeqlevels(gr)
+## Note that seqlevels0() and restoreSeqlevels() only work on TxDb
+## objects at the moment.
 
 ## ---------------------------------------------------------------------
-## E. SUBSET OBJECTS BY SEQLEVELS
+## D. SUBSET OBJECTS BY SEQLEVELS
 ## ---------------------------------------------------------------------
 
 tx <- transcripts(txdb)
@@ -434,7 +406,7 @@ seqlevels(tx, pruning.mode="coarse") <- c("ch3L", "ch3R")
 seqlevels(tx)
 
 ## ---------------------------------------------------------------------
-## F. FINDING METHODS
+## E. FINDING METHODS
 ## ---------------------------------------------------------------------
 
 showMethods("seqinfo")

@@ -74,6 +74,9 @@ export(
     orderSeqlevels,
     rankSeqlevels,
 
+    ## seqinfo.R:
+    restoreSeqlevels,
+
     ## Seqinfo-class.R:
     Seqinfo, checkCompatibleSeqinfo,
 
@@ -91,12 +94,16 @@ export(
     seqinfo, "seqinfo<-",
     seqnames, "seqnames<-",
     seqlevels, "seqlevels<-",
-    sortSeqlevels,
-    seqlevelsInUse,
     seqlevels0,
     seqlengths, "seqlengths<-",
     isCircular, "isCircular<-",
     genome, "genome<-",
+
+    ## sortSeqlevels.R:
+    sortSeqlevels,
+
+    ## seqlevelsInUse.R:
+    seqlevelsInUse,
 
     ## GenomeDescription-class.R:
     commonName, provider, providerVersion,
@@ -108,11 +115,11 @@ exportMethods(
     seqinfo,
     seqnames, "seqnames<-",
     seqlevels, "seqlevels<-",
-    sortSeqlevels,
-    seqlevelsInUse,
     seqlengths, "seqlengths<-",
     isCircular, "isCircular<-",
     genome, "genome<-",
+    sortSeqlevels,
+    seqlevelsInUse,
     commonName, provider, providerVersion,
     releaseDate, bsgenomeName
 )
