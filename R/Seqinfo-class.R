@@ -26,28 +26,42 @@ setClass("Seqinfo",
 ###
 ### The Seqinfo class definition was moved from GenomeInfoDb to the Seqinfo
 ### package in BioC 3.22.
+###
+### IMPORTANT NOTE: Calling updateObject() on a Seqinfo object with the
+### class package attribute set to "GenomeInfoDb" will trigger the loading
+### of the GenomeInfoDb package (this is how dispatch works for an S4
+### generic like updateObject() so we have no control on that). This means
+### that 'R CMD check' will fail on a Bioconductor package that calls
+### updateObject() internally to update serialized objects on-the-fly before
+### returning them to the user, unless GenomeInfoDb is already loaded or
+### listed in Suggests. This totally sucks!
+### This is why we call Seqinfo:::update_Seqinfo_object(object@seqinfo, ...)
+### instead of updateObject(object@seqinfo, ...) in the updateObject()
+### methods for objects that have a @seqinfo slot.
+### See updateObject() method for GRanges in the GenomicRanges package
+### (file R/GRanges-class.R) for an example.
 
-setMethod("updateObject", "Seqinfo",
-    function(object, ..., verbose=FALSE)
-    {
-        object_class <- class(object)
-        class_package_attr <- attr(object_class, "package")
-        if (class_package_attr != "Seqinfo") {
-            if (verbose)
-                message("[updateObject] class package attribute ",
-                        "on ", object_class, " object ",
-                        "is \"", class_package_attr, "\".\n",
-                        "[updateObject] Setting it to \"Seqinfo\" ... ",
-                        appendLF=FALSE)
-            class(object) <- class(Seqinfo())
-            if (verbose)
-                message("OK")
-        }
-
-        #object <- callNextMethod()
-        object
+update_Seqinfo_object <- function(object, ..., verbose=FALSE)
+{
+    object_class <- class(object)
+    class_package_attr <- attr(object_class, "package")
+    if (class_package_attr != "Seqinfo") {
+        if (verbose)
+            message("[updateObject] class package attribute ",
+                    "on ", object_class, " object ",
+                    "is \"", class_package_attr, "\".\n",
+                    "[updateObject] Setting it to \"Seqinfo\" ... ",
+                    appendLF=FALSE)
+        class(object) <- class(Seqinfo())
+        if (verbose)
+            message("OK")
     }
-)
+
+    #object <- callNextMethod()
+    object
+}
+
+setMethod("updateObject", "Seqinfo", update_Seqinfo_object)
 
 
 ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

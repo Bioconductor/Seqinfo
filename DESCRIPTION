@@ -12,7 +12,7 @@ Description: The Seqinfo class stores the names, lengths, circularity flags,
 biocViews: Infrastructure, DataRepresentation, GenomeAssembly, Annotation, GenomeAnnotation
 URL: https://bioconductor.org/packages/Seqinfo
 BugReports: https://github.com/Bioconductor/Seqinfo/issues
-Version: 0.99.2
+Version: 0.99.3
 License: Artistic-2.0
 Encoding: UTF-8
 Authors@R: person("Hervé", "Pagès", role=c("aut", "cre"),
