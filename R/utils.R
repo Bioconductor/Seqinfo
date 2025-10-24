@@ -6,16 +6,6 @@
 ###
 
 
-### TODO: Move this to S4Vectors (or BiocBaseUtils).
-load_package_gracefully <- function(package, ...)
-{
-    if (!requireNamespace(package, quietly=TRUE))
-        stop("Could not load package ", package, ". Is it installed?\n\n  ",
-             wmsg("Note that ", ..., " requires the ", package, " package. ",
-                  "Please install it with:"),
-             "\n\n    BiocManager::install(\"", package, "\")")
-}
-
 ### Note that, strictly speaking, mergeNamedAtomicVectors() is not
 ### commutative, i.e., in general 'z1 <- mergeNamedAtomicVectors(x, y)' is
 ### not identical to 'z2 <- mergeNamedAtomicVectors(y, x)'. However 'z1' and

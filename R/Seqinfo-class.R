@@ -184,7 +184,8 @@ setValidity2("Seqinfo", .valid.Seqinfo)
 ### Requires the GenomeInfoDb package.
 .make_Seqinfo_from_genome <- function(genome)
 {
-    load_package_gracefully("GenomeInfoDb", "Seqinfo(genome=\"", genome, "\")")
+    S4Vectors:::load_package_gracefully("GenomeInfoDb",
+                             "by 'Seqinfo(genome=\"", genome, "\")'")
     if (!isSingleString(genome) || genome == "")
         stop("'genome' must be a single non-empty string")
     NCBI_assemblies <- GenomeInfoDb::registered_NCBI_assemblies()
