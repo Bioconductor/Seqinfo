@@ -457,12 +457,15 @@ setReplaceMethod("genome", "Seqinfo",
 ### Coercion
 ###
 
-### S3/S4 combo for as.data.frame.Seqinfo
+### --- S3/S4 combo for as.data.frame.Seqinfo ---
 ### Inherits the 'validRN' argument from as.data.frame.vector(), and
 ### the 'stringsAsFactors' argument from as.data.frame.character(),
 ### as.data.frame.list(), and as.data.frame.matrix().
-### Silently ignores the 'optional' and 'validRN' arguments.
-.as.data.frame.Seqinfo <- function(x, row.names=NULL, optional=FALSE,
+### Silently ignores the 'validRN' argument but we must have it anyways to
+### make data.frame(Seqinfo()) work. That's because data.frame() explicitly
+### sets the 'validRN' argument when calling as.data.frame() internally on
+### the supplied Seqinfo object.
+.as.data.frame.Seqinfo <- function(x, row.names=NULL,
                                    validRN=TRUE, stringsAsFactors=FALSE)
 {
     data.frame(seqnames=seqnames(x),
@@ -472,8 +475,9 @@ setReplaceMethod("genome", "Seqinfo",
                row.names=row.names, check.names=FALSE,
                stringsAsFactors=stringsAsFactors)
 }
+### Silently ignores the 'optional' argument.
 as.data.frame.Seqinfo <- function(x, row.names=NULL, optional=FALSE, ...)
-    .as.data.frame.Seqinfo(x, row.names=NULL, optional=FALSE, ...)
+    .as.data.frame.Seqinfo(x, row.names=NULL, ...)
 setMethod("as.data.frame", "Seqinfo", as.data.frame.Seqinfo)
 
 .from_DataFrame_to_Seqinfo <- function(from)
