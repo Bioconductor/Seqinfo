@@ -477,7 +477,7 @@ setReplaceMethod("genome", "Seqinfo",
 }
 ### Silently ignores the 'optional' argument.
 as.data.frame.Seqinfo <- function(x, row.names=NULL, optional=FALSE, ...)
-    .as.data.frame.Seqinfo(x, row.names=NULL, ...)
+    .as.data.frame.Seqinfo(x, row.names=row.names, ...)
 setMethod("as.data.frame", "Seqinfo", as.data.frame.Seqinfo)
 
 .from_DataFrame_to_Seqinfo <- function(from)
