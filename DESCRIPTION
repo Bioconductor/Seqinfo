@@ -12,14 +12,14 @@ Description: The Seqinfo class stores the names, lengths, circularity flags,
 biocViews: Infrastructure, DataRepresentation, GenomeAssembly, Annotation, GenomeAnnotation
 URL: https://bioconductor.org/packages/Seqinfo
 BugReports: https://github.com/Bioconductor/Seqinfo/issues
-Version: 1.3.0
+Version: 1.3.1
 License: Artistic-2.0
 Encoding: UTF-8
 Authors@R: person("Hervé", "Pagès", role=c("aut", "cre"),
 		  email="hpages.on.github@gmail.com",
 		  comment=c(ORCID="0009-0002-8272-4522"))
 Depends: methods, BiocGenerics
-Imports: stats, S4Vectors (>= 0.47.6), IRanges
+Imports: stats, S4Vectors (>= 0.51.8), IRanges (>= 2.47.3)
 Suggests: GenomeInfoDb, GenomicRanges, BSgenome, GenomicFeatures,
 	TxDb.Hsapiens.UCSC.hg38.knownGene,
 	TxDb.Dmelanogaster.UCSC.dm3.ensGene,

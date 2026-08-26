@@ -458,21 +458,22 @@ setReplaceMethod("genome", "Seqinfo",
 ###
 
 ### S3/S4 combo for as.data.frame.Seqinfo
-as.data.frame.Seqinfo <- function(x, row.names=NULL, optional=FALSE, ...)
+### Inherits the 'validRN' argument from as.data.frame.vector(), and
+### the 'stringsAsFactors' argument from as.data.frame.character(),
+### as.data.frame.list(), and as.data.frame.matrix().
+### Silently ignores the 'optional' and 'validRN' arguments.
+.as.data.frame.Seqinfo <- function(x, row.names=NULL, optional=FALSE,
+                                   validRN=TRUE, stringsAsFactors=FALSE)
 {
-    if (!is.null(row.names))
-        warning("supplied 'row.names' value was ignored")
-    if (!identical(optional, FALSE))
-        warning("supplied 'optional' value was ignored")
-    if (length(list(...)) != 0L)
-        warning("extra arguments were ignored")
-    data.frame(seqlengths=unname(seqlengths(x)),
+    data.frame(seqnames=seqnames(x),
+               seqlengths=unname(seqlengths(x)),
                isCircular=unname(isCircular(x)),
                genome=unname(genome(x)),
-               row.names=seqnames(x),
-               check.names=FALSE,
-               stringsAsFactors=FALSE)
+               row.names=row.names, check.names=FALSE,
+               stringsAsFactors=stringsAsFactors)
 }
+as.data.frame.Seqinfo <- function(x, row.names=NULL, optional=FALSE, ...)
+    .as.data.frame.Seqinfo(x, row.names=NULL, optional=FALSE, ...)
 setMethod("as.data.frame", "Seqinfo", as.data.frame.Seqinfo)
 
 .from_DataFrame_to_Seqinfo <- function(from)
